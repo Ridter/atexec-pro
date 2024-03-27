@@ -2,7 +2,7 @@
 
 Modified based on [atexec.py](https://github.com/fortra/impacket/blob/master/examples/atexec.py).
 
-The TSCH service is used by default(neet port 135) and port 445 is no longer required.
+The TSCH service is used by default(neet port 135 a dynamic high port), port 445 is no longer required.
 >ATSVC need port 445
 
 The technology is mainly based on [this article](https://www.zcgonvh.com/post/Advanced_Windows_Task_Scheduler_Playbook-Part.3_from_RPC_to_lateral_movement.html) by [zcgonvh](https://github.com/zcgonvh).
