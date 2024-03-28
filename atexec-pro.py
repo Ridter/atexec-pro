@@ -107,7 +107,6 @@ class AtShell(cmd2.Cmd):
     def do_cmd_exec(self, s):
         """Executes a command on the target"""
         command = s.command
-        logging.debug('Executing cmd command: %s' % command)
         self.at_op.execute_cmd_command(command)
 
     def do_execute_assembly(self, line):
@@ -126,7 +125,7 @@ class AtShell(cmd2.Cmd):
         self.at_op.execute_assembly(prog, args)
 
     def default(self, statement: Statement):
-        self.at_op.execute_cmd_command(statement.command)
+        self.at_op.execute_cmd_command(statement.command_and_args)
 
 
     def do_exit(self, s):

@@ -89,6 +89,7 @@ class TSCH_EXEC:
             cmd = "cmd.exe"
             args = "/C %s" % (command)
         command = cmd + ' ' + args
+        logging.debug('Executing cmd command: %s' % command)
         with open('./libs/powershells/cmd.ps1', 'r') as f:
             script = f.read()
         self.start_tsch(command, script)
@@ -328,18 +329,17 @@ class TSCH_EXEC:
                 # get the output from xml Description
                 output = resp_xml.split('<Description>')[1].split('</Description>')[0]
                 if output in xml:
-                    logging.error('Execution failed, no output returned. Maybe the windows version is too old or ps killed by AV.')
+                    logging.error('Execution failed, no output returned or the ps killed by AV.')
                 else:
-                    output = self.decrypt(randomkey, output)
                     if save is True:
                         try:
-                            output = output.encode(self.__codec)
-                            byte_array = bytes(int(b) for b in output.split())
+                            output = base64.b64decode(output)
                             with open(save_path, 'wb') as f:
-                                f.write(byte_array)
-                        except:
-                            self.output_callback(output)
+                                f.write(output)
+                        except Exception as e:
+                            self.output_callback(output.encode(self.__codec))
                     else:
+                        output = self.decrypt(randomkey, output)
                         self.output_callback(output.encode(self.__codec))
             except Exception as e:
                 logging.error(e)
